@@ -9,11 +9,63 @@ rm -rf asd-template/.git
 
 Then, rename the folder to `pong`
 
+**Table of Contents**
+- [Learning Objectives](#learning-objects)
+- [Abstraction Example](#abstraction-example)
+- [Planning](#planning)
+- [Plan of Attack](#plan-of-attack)
+- [Helpful code](#helpful-code)
+
 # Learning Objectives
 - Practice modeling data with Objects
 - Reuse code from previous projects to create something new
 - Practice abstraction
 - Apply the algorithm for detecting collisions between objects
+
+# Abstraction Example	
+
+This project will have you practicing reusing code from prior projects to create something new. In fact, almost all of the code needed to create Pong has already be written _by you_ in prior projects (Bouncing Box / Walker). 
+
+However, in those projects we were only dealing with a single object's movement. In this project we will need to manage the movement of (and all associated data for) 3 objects: the ball and the two paddles. Provided for you in this README is some code that we've written in the past that will be applicable to this project. 
+
+However, to make the code reusuable for multiple objects, you will need to refactor the code. This process is called **Abstraction**:
+
+> Abstraction is the process of turning something specific (hard-coded) into something generic (reusable)	
+
+To refactor repetitive code for abstraction, you can follow these 3 steps:	
+1. identify the repetetive statements and turn those statements into a new function declaration	
+2. identify the changing expressions/data (if any) and turn those expressions/data into parameters	
+3. replace repetitive code with function calls	
+
+Below is an example of refactoring for abstraction. Consider the following code which simulates rolling dice of different sizes:	
+
+```js
+var roll1 = Math.ceil(Math.random() * 6);	
+var roll2 = Math.ceil(Math.random() * 10);	
+var roll3 = Math.ceil(Math.random() * 20);	
+```
+
+Each time I roll the dice I am using the `Math.ceil()` and `Math.random()` functions, the `*` operator and a number value. These statements can be turned into a new function declaration.	
+
+```js	
+function rollDice() {	
+  return Math.ceil(Math.random() * 6); // the 6 should be a parameter, not hard-coded	
+}	
+var roll1 = rollDice(6);	
+var roll2 = rollDice(10);	
+var roll3 = rollDice(20);	
+```
+
+However, we want the number value `6` to change each time we call the function. That value must be replaced with a parameter:	
+
+```js	
+function rollDice(sides) {	
+  return Math.ceil(Math.random() * sides);	
+}	
+var roll1 = rollDice(6);	
+var roll2 = rollDice(10);	
+var roll3 = rollDice(20);	
+```
 
 # Planning
 
@@ -42,9 +94,22 @@ With your partner, consider each of these questions and make sure you are aligne
 1. When the user clicks on the box --> the score increases and is displayed on the box, the speed increases, the box is reset to the starting position. 
 2. When the timer ticks --> the box will move forward in some direction, if it hits the edge of the screen, reverse the direction 
 
-# Helpful Functions / Code
+# Plan of Attack
 
-Below are some code / functions we've written in the past that may be helpful to you in this project:
+I recommend that you complete this project by completing these tasks:
+1. Create the DOM elements needed for the game with HTML and CSS
+2. Create a factory function to structure the data needed for each DOM element.
+3. Create a helper function for repositioning the DOM elements on the screen using jQuery
+4. Move the paddles in response to keyboard events
+5. Move the ball in response to timed events
+6. Identify when the ball collides with the paddles --> Determine how the ball will bounce off
+7. Identify when the ball collides with the top or bottom --> Determine how the ball will bounce off
+7. Identify when a point ends --> Determine what to do to start a new point
+8. End the game when 11 points are reached
+
+# Helpful Code
+
+Below is some code we've written in the past that may be helpful to you in this project. You will likely have to refactor the code to make it more abstract (reusable).
 
 ### HTML for Game Items:
 
@@ -175,59 +240,3 @@ function handleKeyDown() {
 ```
 
 Use https://keycode.info/ to find out the keycode for any key. 
-
-# Abstraction Example	
-
-> Abstraction is the process of turning something specific (hard-coded) into something generic (reusable)	
-
-Repetitive code presents an opportunity to refactor for abstraction. Abstraction helps us to follow the D.R.Y. principle (don't repeat yourself).	
-
-To refactor repetitive code for abstraction, you can follow these 3 steps:	
-1. identify the repetetive statements and turn those statements into a new function declaration	
-2. identify the changing expressions/data (if any) and turn those expressions/data into parameters	
-3. replace repetitive code with function calls	
-
-Below is an example of refactoring for abstraction. Consider the following code which simulates rolling dice of different sizes:	
-
-```js
-var roll1 = Math.ceil(Math.random() * 6);	
-var roll2 = Math.ceil(Math.random() * 10);	
-var roll3 = Math.ceil(Math.random() * 20);	
-```
-
-Each time I roll the dice I am using the `Math.ceil()` and `Math.random()` functions, the `*` operator and a number value. These statements can be turned into a new function declaration.	
-
-```js	
-function rollDice() {	
-  return Math.ceil(Math.random() * 6); // the 6 should be a parameter, not hard-coded	
-}	
-var roll1 = rollDice(6);	
-var roll2 = rollDice(10);	
-var roll3 = rollDice(20);	
-```
-
-However, we want the number value `6` to change each time we call the function. That value must be replaced with a parameter:	
-
-```js	
-function rollDice(sides) {	
-  return Math.ceil(Math.random() * sides);	
-}	
-var roll1 = rollDice(6);	
-var roll2 = rollDice(10);	
-var roll3 = rollDice(20);	
-```
-
-
-# Plan of Attack
-
-The plan for building Pong will be as follows:
-1. Create the DOM elements needed for the game with HTML and CSS
-2. Create a factory function to structure the data needed for each DOM element.
-3. Create a helper function for repositioning the DOM elements on the screen using jQuery
-4. Move the paddles in response to keyboard events
-5. Move the ball in response to timed events
-6. Identify when the ball collides with the paddles --> Determine how the ball will bounce off
-7. Identify when the ball collides with the top or bottom --> Determine how the ball will bounce off
-7. Identify when a point ends --> Determine what to do to start a new point
-8. End the game when 11 points are reached
-
