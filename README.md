@@ -165,7 +165,8 @@ function GameItem(selector) {
 You can then reference the `.$element` property to manipulate the DOM element through jQuery functions like `.css()`:
 
 ```js
-gameItem.$element.css("background-color", "red");
+gameItem.y += gameItem.velocityY;
+gameItem.$element.css("top", gameItem.y);
 ```
 
 ### Repositioning DOM Elements
