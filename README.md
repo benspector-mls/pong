@@ -1,3 +1,7 @@
+# Pong
+
+<img src="https://media.giphy.com/media/lDNGok9beljQ4/giphy.gif">
+
 **Table of Contents**
 - [Setup](#setup)
 - [Learning Objectives](#learning-objectives)
