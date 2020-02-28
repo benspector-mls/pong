@@ -228,10 +228,10 @@ Each corner can be represented in data as a `point`: an object with an `x` and `
 and the corresponding points:
 
 ```js
-var left1 =   { "x" : 100, "y": 200 };
-var right1 =  { "x" : 350, "y": 400 };
-var left2 =   { "x" : 300, "y": 150 };
-var right2 =  { "x" : 500, "y": 250 };
+var left1   =   { "x" : 100, "y": 200 };
+var right1  =  { "x" : 350, "y": 400 };
+var left2   =   { "x" : 300, "y": 150 };
+var right2  =  { "x" : 500, "y": 250 };
 ```
 
 Interestingly, it is far easier to tell if two objects are not colliding than when they are colliding.
@@ -240,8 +240,16 @@ The objects are _not colliding_ if:
 - The **left point** of one object is to the right of the **right point** of the other. For example, `left2` is to the right of `right1`
 - The **left point** of one object is below the **right point** of the other. For example, `left1` is below `right2`.
 
-Otherwise, they must be colliding
+Otherwise, they must be colliding.
 
+It would be useful to have a function that could tell if any two objects are colliding. Write this function:
+
+```js
+function doCollide(obj1, obj2) {
+  // from each object, calculate the top-left and bottom-right coordinate points
+  // return false if they are not overlapping, true if they are
+}
+```
 
 # Abstraction Example	
 
