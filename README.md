@@ -9,6 +9,7 @@
   - [Factory Function](#factory-function)
   - [Repositioning DOM Elements](#repositioning-dom-elements)
   - [Keybord Inputs](#keyboard-inputs)
+- [Collisions](#collisions)
 - [Abstraction Example](#abstraction-example)
 
 # Setup
@@ -213,6 +214,34 @@ function handleKeyDown() {
 ```
 
 Use https://keycode.info/ to find out the keycode for any key. 
+
+# Collisions	
+
+In games, collisions will occur frequently between objects. Having a function that can tell if two objects are colliding would be really convenient!
+
+If we assume that all objects are rectangular, we can easily tell whether or not they collide based on the coordinates for each object's top left and bottom right corners.
+
+Each corner can be represented in data as a `point`: an object with an `x` and `y` property. For example, consider the image below: 
+
+<img src="img/collisions.png">
+
+and the corresponding points:
+
+```js
+var left1 =   { "x" : 100, "y": 200 };
+var right1 =  { "x" : 350, "y": 400 };
+var left2 =   { "x" : 300, "y": 150 };
+var right2 =  { "x" : 500, "y": 250 };
+```
+
+Interestingly, it is far easier to tell if two objects are not colliding than when they are colliding.
+
+The objects are _not colliding_ if:
+- The **left point** of one object is to the right of the **right point** of the other. For example, `left2` is to the right of `right1`
+- The **left point** of one object is below the **right point** of the other. For example, `left1` is below `right2`.
+
+Otherwise, they must be colliding
+
 
 # Abstraction Example	
 
