@@ -232,9 +232,9 @@ Each corner can be represented in data as a `point`: an object with an `x` and `
 and the corresponding points:
 
 ```js
-var left1   =   { "x" : 100, "y": 200 };
+var left1   =  { "x" : 100, "y": 200 };
 var right1  =  { "x" : 350, "y": 400 };
-var left2   =   { "x" : 300, "y": 150 };
+var left2   =  { "x" : 300, "y": 150 };
 var right2  =  { "x" : 500, "y": 250 };
 ```
 
