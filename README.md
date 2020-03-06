@@ -12,7 +12,7 @@
   - [CSS for Game Items](#css-for-game-items)
   - [Factory Function](#factory-function)
   - [Repositioning DOM Elements](#repositioning-dom-elements)
-  - [Keybord Inputs](#keyboard-inputs)
+  - [Keyboard Inputs](#keyboard-inputs)
 - [Collisions](#collisions)
 - [Abstraction Example](#abstraction-example)
 
@@ -55,23 +55,24 @@ With your partner, consider each of these questions and make sure you are aligne
 - What events will occur in this game? (timer events, keyboard events, clicking events?)
 - For each "event", write out the high-level logic of what will happen. It is better (and tricky) to be as specific as you can while remaining high-level!
 
-**Bouncing Box Example:**
-
-1. When the user clicks on the box --> the score increases and is displayed on the box, the speed increases, the box is reset to the starting position. 
-2. When the timer ticks --> the box will move forward in some direction, if it hits the edge of the screen, reverse the direction 
+For example: in bouncing box, when the box is clicked:
+1. The speed is increased
+2. The point total goes up by 1 and is displayed on the box
+3. The position of the box is reset to the left side of the screen
 
 # Plan of Attack
 
 The plan for building Pong will be as follows:
-1. Create the DOM elements needed for the game with HTML and CSS
-2. Create a factory function to structure the data needed for each DOM element.
-3. Create a helper function `moveGameItem` for repositioning the DOM elements on the screen using jQuery
-4. Move the paddles in response to keyboard events by adjusting each paddle's `.velocityY` property
-5. Move the ball in response to timed events
-6. Identify when the ball collides with the paddles --> Determine how the ball will bounce off
-7. Identify when the ball collides with the top or bottom --> Determine how the ball will bounce off
-7. Identify when a point ends --> Determine what to do to start a new point
-8. End the game when 11 points are reached
+1. Create the DOM elements needed for the game with HTML and CSS.
+2. Declare variables for data needed for each DOM element. Use objects to group together related data.
+3. Create a factory function to reduce repitition when creating game item objects. 
+4. Respond to keyboard events by adjusting each paddle's `.velocityY` property.
+5. Move the paddles.
+6. Move the ball.
+7. Identify when the ball collides with the paddles --> Determine how the ball will bounce off.
+8. Identify when the ball collides with the top or bottom --> Determine how the ball will bounce off.
+9. Identify when a point ends --> Determine what to do to start a new point.
+10. End the game when 11 points are reached.
 
 # Helpful Code
 
@@ -99,6 +100,8 @@ Each one of these game items needs to be represented in HTML and, for the most p
 ```html
 <div id="uniqueGameItemName"> </div>
 ```
+
+Later on you may want to add `#score` elements. For now, focus on the ball and the paddles.
 
 ### CSS for Game Items
 
@@ -157,13 +160,13 @@ var box = GameItem("#box", 100, 200, 1, 0);   // <== I set vX to 1 and vY to 0 s
 /**
  * @param {string} selector the CSS selector for the DOM element of the GameItem
  */
-function GameItem(selector, x, y, vX, vY) {
+function GameItem(selector, x, y, velocityX, velocityY) {
   var gameItemObj = {};
   gameItem.$element = $(selector); 
   gameItem.x = x;
   gameItem.y = y;
-  gameItem.velocityX = vX;
-  gameItem.velocityY = vY;
+  gameItem.velocityX = velocityX;
+  gameItem.velocityY = velocityY;
   return gameItemObj;
 }
 ```
@@ -197,7 +200,7 @@ function moveBox() {
 
 We will need to refactor this function such that it can handle _any_ `GameItem`'s `$element` with its own `x`, `y`, `velocityX`, and `velocityY` values. 
 
-### Keybord Inputs
+### Keyboard Inputs
 
 This function assumes that the event `"keydown"` is being listened for. You can change what events are being listend for in the function `turnOnEvents` of the template. 
 
