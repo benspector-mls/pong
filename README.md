@@ -148,49 +148,50 @@ We will need to manage the data for each `GameItem` in this project. I highly re
 - `gameItem.velocityX`
 - `gameItem.velocityY`
 
+For example, if I were to use this factory function in the bouncing box program, I might do the following:
 ```js
 // Initialization
-var gameItem = GameItem("#gameItem");
+var box = GameItem("#box", 100, 200, 1, 0);   // <== I set vX to 1 and vY to 0 so that the box moves horizontally only
 
 // Helper Functions
 /**
  * @param {string} selector the CSS selector for the DOM element of the GameItem
  */
-function GameItem(selector) {
+function GameItem(selector, x, y, vX, vY) {
   var gameItemObj = {};
   gameItem.$element = $(selector); 
-  gameItem.x = 0;
-  gameItem.y = 0;
-  gameItem.velocityX = 0;
-  gameItem.velocityY = 0;
+  gameItem.x = x;
+  gameItem.y = y;
+  gameItem.velocityX = vX;
+  gameItem.velocityY = vY;
   return gameItemObj;
 }
 ```
 
-You can then reference the `.$element` property to manipulate the DOM element through jQuery functions like `.css()`:
+You can then reference the `.$element` property to manipulate the DOM element through jQuery functions like `.css()`. The `moveBox()` function might look like this:
 
 ```js
-gameItem.y += gameItem.velocityY;
-gameItem.$element.css("top", gameItem.y);
+function moveBox() {
+  box.x += box.velocityX;
+  box.$element.css("left", box.x);
+}
 ```
 
 ### Repositioning DOM Elements
 
 This function can be used to reposition a DOM element `$gameItem` at an absolute position on the screen by manipulating the CSS properties `left` and `top`. 
 
-This function assumes that we have the following _global_ data values:
-- `$gameItem`: the jQuery Object for a `<div id="gameItem">` element
-- `x`: the x-coordinate / `left` value of the `$gameItem`
-- `y`: the y-coordinate / `top` value of the `$gameItem`
-- `velocityX`: the velocity (pixels/frame) along the x-axis of the `$gameItem`
-- `velocityY`: the velocity (pixels/frame) along the y-axis of the `$gameItem`
+This function assumes that we have a global `box` object with the following properties:
+- `$element`: the jQuery Object the box element
+- `x`: the x-coordinate / `left` value of the `box`
+- `y`: the y-coordinate / `top` value of the `box`
+- `velocityX`: the velocity (pixels/frame) along the x-axis of the `box`
+- `velocityY`: the velocity (pixels/frame) along the y-axis of the `box`
 
 ```js
-function moveGameItem() {
-  x += velocityX;
-  y += velocityY;
-  $gameItem.css("left", x);
-  $gameItem.css("top", y);
+function moveBox() {
+  box.x += box.velocityX;
+  box.$element.css("left", box.x);
 }
 ```
 
