@@ -142,9 +142,46 @@ Suggestions for this project:
 - Both paddles should have `width: 20px;` and `height: 80px;`
 - The ball should have `width:20px;`, `height:20px` and `border-radius: 20px;`
 
+### Repositioning DOM Elements
+
+We'll need to reposition the ball and each paddle on each update of the timer. Luckily, we've learned how to move things in the past by keeping track of:
+- the `speedX` of the game item
+- the `positionX` of the game item (or just `x`)
+
+And by using the jQuery function: `$("selector").css("left", newPositionX)`
+
+For example, in bouncing box, we have the following function:
+
+```js
+function moveBox() {
+  positionX = positionX + speedX  // <== this is the same as positionX += speedX;
+  $("#box").css("left", positionX);
+}
+```
+
 ### Factory Function
 
-We will need to manage the data for each `GameItem` in this project. I highly recommend using a factory function to ensure that each `GameItem` has the data below:
+We will need to manage the data for each game item in this project: the ball and each paddle. Use objects to manage this data. For example, in bouncing box, we could organize the data for the box like so:
+
+```js
+var box = {};
+box.x = 0;
+box.y = 100;
+box.velocityX = 1;
+box.velocityY = 0;
+box.$element = $("#box");
+```
+
+You can then reference the `.$element` property to manipulate the DOM element through jQuery functions like `.css()`. The `moveBox()` function might look like this:
+
+```js
+function moveBox() {
+  box.x += box.velocityX;
+  box.$element.css("left", box.x);
+}
+```
+
+Since you'll be creating objects to represent the ball and each paddle, I highly recommend using a factory function to ensure that each `gameItem` has the data below:
 - `gameItem.$element`
 - `gameItem.x`
 - `gameItem.y`
@@ -170,35 +207,6 @@ function GameItem(selector, x, y, velocityX, velocityY) {
   return gameItemObj;
 }
 ```
-
-You can then reference the `.$element` property to manipulate the DOM element through jQuery functions like `.css()`. The `moveBox()` function might look like this:
-
-```js
-function moveBox() {
-  box.x += box.velocityX;
-  box.$element.css("left", box.x);
-}
-```
-
-### Repositioning DOM Elements
-
-This function can be used to reposition a DOM element `$gameItem` at an absolute position on the screen by manipulating the CSS properties `left` and `top`. 
-
-This function assumes that we have a global `box` object with the following properties:
-- `$element`: the jQuery Object the box element
-- `x`: the x-coordinate / `left` value of the `box`
-- `y`: the y-coordinate / `top` value of the `box`
-- `velocityX`: the velocity (pixels/frame) along the x-axis of the `box`
-- `velocityY`: the velocity (pixels/frame) along the y-axis of the `box`
-
-```js
-function moveBox() {
-  box.x += box.velocityX;
-  box.$element.css("left", box.x);
-}
-```
-
-We will need to refactor this function such that it can handle _any_ `GameItem`'s `$element` with its own `x`, `y`, `velocityX`, and `velocityY` values. 
 
 ### Keyboard Inputs
 
