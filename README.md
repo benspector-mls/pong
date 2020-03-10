@@ -10,7 +10,7 @@
 - [Helpful Code](#helpful-code)
   - [HTML for Game Items](#html-for-game-items)
   - [CSS for Game Items](#css-for-game-items)
-  - [Factory Function](#factory-function)
+  - [Use Objects to Manage Data](#use-objects-to-manage-data)
   - [Repositioning DOM Elements](#repositioning-dom-elements)
   - [Keyboard Inputs](#keyboard-inputs)
 - [Collisions](#collisions)
@@ -145,23 +145,35 @@ Suggestions for this project:
 ### Repositioning DOM Elements
 
 We'll need to reposition the ball and each paddle on each update of the timer. Luckily, we've learned how to move things in the past by keeping track of:
-- the `speedX` of the game item
-- the `positionX` of the game item (or just `x`)
+- `x` (or `positionX`): the coordinate location of the game item along the x axis
+- `velocityX` (or `speedX`): the `speed*direction` of the game item along the x axis
 
-And by using the jQuery function: `$("selector").css("left", newPositionX)`
+And by using the jQuery `.css()` function to change the `left` property: 
+
+```js
+$("selector").css("left", newPositionX)
+```
 
 For example, in bouncing box, we have the following function:
 
 ```js
 function moveBox() {
-  positionX = positionX + speedX  // <== this is the same as positionX += speedX;
-  $("#box").css("left", positionX);
+  x = x + velocityX  // <== this is the same as positionX += speedX;
+  $("#box").css("left", x);
 }
 ```
 
-### Factory Function
+If we wanted to move the box vertically, we could also keep track of `y` and `velocityY` and use the jQuery `.css()` function to change the `top` property:
 
-We will need to manage the data for each game item in this project: the ball and each paddle. Use objects to manage this data. For example, in bouncing box, we could organize the data for the box like so:
+```js
+$("selector").css("top", newPositionY)
+```
+
+### Use Objects to Manage Data
+
+We will need to manage the data for each game item in this project: the ball and each paddle. 
+
+Use objects to manage this data. For example, in bouncing box, we could organize the data for the box like so:
 
 ```js
 var box = {};
@@ -188,23 +200,44 @@ Since you'll be creating objects to represent the ball and each paddle, I highly
 - `gameItem.velocityX`
 - `gameItem.velocityY`
 
-For example, if I were to use this factory function in the bouncing box program, I might do the following:
+When creating a factory function, the function should return an object that has a specific set of properties already assigned to it. The properties that you want customized for each object should be parameterized.
+
+For example, consider this data for animal objects:
+
+```js
+var spot = {};
+spot.name = "spot";
+spot.species = "dog";
+spot.owner = "Farmer Fred";
+
+var daisy = {};
+daisy.name = "daisy";
+daisy.species = "bird";
+spot.owner = "Farmer Fred";
+
+var bessy = {};
+bessy.name = "bessy";
+bessy.species = "cow";
+spot.owner = "Farmer Fred";
+```
+
+Since each object shares the same properties; `name`, `species`, and `owner`, I can create a factory function that reduces the repetitive creation of those objects.
+
+For each value that is unique, I will add a parameter to my factory function. Any values that are shared can be hard-coded into the object.
+
 ```js
 // Initialization
-var box = GameItem("#box", 100, 200, 1, 0);   // <== I set vX to 1 and vY to 0 so that the box moves horizontally only
+var spot = Animal("spot", "dog");
+var daisy = Animal("daisy", "bird");
+var bessy = Animal("bessy", "cow");
 
 // Helper Functions
-/**
- * @param {string} selector the CSS selector for the DOM element of the GameItem
- */
-function GameItem(selector, x, y, velocityX, velocityY) {
-  var gameItemObj = {};
-  gameItem.$element = $(selector); 
-  gameItem.x = x;
-  gameItem.y = y;
-  gameItem.velocityX = velocityX;
-  gameItem.velocityY = velocityY;
-  return gameItemObj;
+function Animal(name, species) {
+  var animal = {};
+  animal.name = name;
+  animal.species = species;
+  animal.owner = "Farmer Fred";
+  return animal;
 }
 ```
 
