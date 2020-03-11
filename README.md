@@ -1,6 +1,6 @@
 # Pong
 
-<img src="https://media.giphy.com/media/lDNGok9beljQ4/giphy.gif">
+<img src="img/pong.gif">
 
 **Table of Contents**
 - [Setup](#setup)
