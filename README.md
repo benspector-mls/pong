@@ -53,12 +53,13 @@ With your partner, consider each of these questions and make sure you are aligne
 
 ### Events / Logic 
 - What events will occur in this game? (timer events, keyboard events, clicking events?)
+- How do those events affect the data of the program?
 - For each "event", write out the high-level logic of what will happen. It is better (and tricky) to be as specific as you can while remaining high-level!
 
 For example: in bouncing box, when the box is clicked:
 1. The speed is increased
 2. The point total goes up by 1 and is displayed on the box
-3. The position of the box is reset to the left side of the screen
+3. The position of the box is reset to 0
 
 # Plan of Attack
 
