@@ -297,16 +297,16 @@ For now, let's assume that we have a generic `gameItem` that is passed to the fu
 ```css
 #gameItem {
   position: absolute;
-  left: 100px;
-  top: 50px;
+  left: 100px;  /* distance from the left side of the screen */
+  top: 50px;    /* distance from the top of the screen */
 }
 ```
 
 ```js
 var gameItem = {};
 gameItem.$element = $("#gameItem");
-gameItem.x = 100;
-gameItem.y = 50;
+gameItem.x = 100;   // same as "left"
+gameItem.y = 50;    // same as "top"
 // speedX and speedY aren't needed for now
 ```
 
