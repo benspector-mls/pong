@@ -316,13 +316,15 @@ gameItem.y = 50;    // same as "top"
 
 ### Left and Top Sides
 
-`gameItem.x` and `gameItem.y` are based on the coordinates of the top-left corner of `gameItem.$element`. So, according to the data above, the **top left corner** of the `gameItem.$element` is 100 pixels from the left of the screen and 50 pixels from the top of the screen. 
+`gameItem.x` and `gameItem.y` are based on the coordinates of the top-left corner of `gameItem.$element`. So, according to the data above, the **top left corner** of the HTML element is 100 pixels from the left of the screen and 50 pixels from the top of the screen. 
 
 This means that we already know that: `gameItem.leftX = gameItem.x` and `gameItem.topY = gameItem.y`.
 
 ### Right and Bottom Sides
 
-We can calculate where `gameItem.rightX` is relative to `gameItem.leftX` if we know the **width** of the `gameItem.$element`. Luckily, since `gameItem.$element` is a jQuery object, it comes with a `.width()` method for calculating its own width (as well as a `height()` method)!
+We can calculate where `gameItem.rightX` is relative to `gameItem.leftX` if we know the **width** of HTML element. Same goes for `gameItem.bottomY` if we know the **height**.
+
+Luckily, since `gameItem.$element` is a jQuery object, it comes with a `.width()` method for calculating its own width (as well as a `height()` method)!
 
 Therefore, we can calculate `gameItem.rightX` and `gameItem.bottomY` like so:
 
