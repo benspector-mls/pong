@@ -310,15 +310,17 @@ gameItem.y = 50;
 // speedX and speedY aren't needed for now
 ```
 
-To tell if the two objects collide, we need to know where each object's boundaries are in space. This means finding the `y` coordinate of the top and bottom sides of each object (`obj.topY` and `obj.bottomY`), and finding the `x` coordinate for the left and right sides of each object (`obj.leftX` and `obj.rightX`).
+**To tell if a our game item collides with another, we need to know where the `gameItem.$element`'s boundaries are in space.** This means
+1. finding the `y` coordinates of the top and bottom sides (`gameItem.topY` and `gameItem.bottomY`)
+2. finding the `x` coordinates of the left and right sides (`gameItem.leftX` and `gameItem.rightX`).
 
-### `obj.leftX` and `obj.topY`
+### `gameItem.leftX` and `gameItem.topY`
 
 `gameItem.x` and `gameItem.y` are based on the coordinates of the top-left corner of `gameItem.$element`. So, according to the data above, the **top left corner** of the `gameItem.$element` is 100 pixels from the left of the screen and 50 pixels from the top of the screen. 
 
 This means that we already know that: `gameItem.leftX = gameItem.x` and `gameItem.topY = gameItem.y`.
 
-### `obj.rightX` and `obj.bottomY`
+### `gameItem.rightX` and `gameItem.bottomY`
 
 We can calculate where `gameItem.rightX` is relative to `gameItem.leftX` if we know the **width** of the `gameItem.$element`. Luckily, since `gameItem.$element` is a jQuery object, it comes with a `.width()` method for calculating its own width (as well as a `height()` method)!
 
