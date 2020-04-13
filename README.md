@@ -284,7 +284,9 @@ if (doCollide(ball, paddleLeft)) {
 }
 ```
 
-Any object passed to our `doCollide` function must have an `$element` property that references the HTML element that the object's data represents as well as `x` and `y` properties that store where the `$element` is. (If you haven't set up your object data for the ball and the paddles, go back before continuing).
+Any object passed to our `doCollide` function should store the data for an HTML element. Therefore, they must have an `$element` storing the jQuery object for the HTML element as well as `x` and `y` properties that store where the `$element` is. 
+
+If you haven't set up your object data to represent the ball and the paddles, go back and do so before continuing
 
 For now, let's assume that we have a generic `gameItem` that is passed to the function as one of our objects. It's HTML, CSS, and JavaScript look like this:
 
