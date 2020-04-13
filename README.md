@@ -147,41 +147,41 @@ Suggestions for this project:
 
 We'll need to reposition the ball and each paddle on each update of the timer. Luckily, we've learned how to move things in the past by keeping track of:
 - `x` (or `positionX`): the coordinate location of the game item along the x axis
-- `velocityX` (or `speedX`): the `speed*direction` of the game item along the x axis
+- or `speedX`: the speed (distance over time) and direction (+/-) of the game item along the x axis
 
-And by using the jQuery `.css()` function to change the `left` property: 
+And by using the jQuery `.css()` function to draw the element in the new position by changing how far the `$element` is from the `"left"` of the screen: 
 
 ```js
-$("selector").css("left", newPositionX)
+$element.css("left", newPositionX)
 ```
 
 For example, in bouncing box, we have the following function:
 
 ```js
 function moveBox() {
-  x = x + velocityX  // <== this is the same as positionX += speedX;
-  $("#box").css("left", x);
+  positionX = positionX + speedX; // update the position of the box along the x-axis
+  $box.css("left", positionX);    // draw the box in the new location, positionX pixels away from the "left"
 }
 ```
 
-If we wanted to move the box vertically, we could also keep track of `y` and `velocityY` and use the jQuery `.css()` function to change the `top` property:
+If we wanted to move the box vertically, we could also keep track of `positionY` and `speedY` and use the jQuery `.css()` function to change the `"top"` property:
 
 ```js
-$("selector").css("top", newPositionY)
+$element.css("top", positionY)
 ```
 
 ### Use Objects to Manage Data
 
 We will need to manage the data for each game item in this project: the ball and each paddle. 
 
-Use objects to manage this data. For example, in bouncing box, we could organize the data for the box like so:
+Use objects to manage this data. For example, in bouncing box, we could organize the data for the box like so (shortening `positionX` and `positionY` to `x` and `y`:
 
 ```js
 var box = {};
 box.x = 0;
 box.y = 100;
-box.velocityX = 1;
-box.velocityY = 0;
+box.speedX = 1;
+box.speedY = 0;
 box.$element = $("#box");
 ```
 
@@ -189,8 +189,8 @@ You can then reference the `.$element` property to manipulate the DOM element th
 
 ```js
 function moveBox() {
-  box.x += box.velocityX;
-  box.$element.css("left", box.x);
+  box.x = box.x + box.speedX;       // update the position of the box along the x-axis
+  box.$element.css("left", box.x);  // draw the box in the new location, positionX pixels away from the "left"
 }
 ```
 
@@ -198,10 +198,10 @@ Since you'll be creating objects to represent the ball and each paddle, I highly
 - `gameItem.$element`
 - `gameItem.x`
 - `gameItem.y`
-- `gameItem.velocityX`
-- `gameItem.velocityY`
+- `gameItem.speedX`
+- `gameItem.speedY`
 
-When creating a factory function, the function should return an object that has a specific set of properties already assigned to it. The properties that you want customized for each object should be parameterized.
+When creating a factory function, the function should return an object that has a specific set of properties already assigned to it. The properties that you want customized for each object should be **parameterized** (turned into parameters/variables).
 
 For example, consider this data for animal objects:
 
@@ -267,37 +267,105 @@ Use https://keycode.info/ to find out the keycode for any key.
 
 # Collisions	
 
-In games, collisions will occur frequently between objects. Having a function that can tell if two objects are colliding would be really convenient!
-
-If we assume that all objects are rectangular, we can easily tell whether or not they collide based on the coordinates for each object's top left and bottom right corners.
-
-Each corner can be represented in data as a `point`: an object with an `x` and `y` property. For example, consider the image below: 
-
-<img src="img/collisions.png">
-
-and the corresponding points:
-
-```js
-var left1   =  { "x" : 100, "y": 200 };
-var right1  =  { "x" : 350, "y": 400 };
-var left2   =  { "x" : 300, "y": 150 };
-var right2  =  { "x" : 500, "y": 250 };
-```
-
-Interestingly, it is far easier to tell if two objects are not colliding than when they are colliding.
-
-The objects are _not colliding_ if:
-- The **left point** of one object is to the right of the **right point** of the other. For example, `left2` is to the right of `right1`
-- The **left point** of one object is below the **right point** of the other. For example, `left1` is below `right2`.
-
-Otherwise, they must be colliding.
-
-It would be useful to have a function that could tell if any two objects are colliding. Write this function:
+In games, collisions will occur frequently between objects. Having a function that can tell if two objects are colliding would be really convenient! The outline for such a function looks like this:
 
 ```js
 function doCollide(obj1, obj2) {
-  // from each object, calculate the top-left and bottom-right coordinate points
-  // return false if they are not overlapping, true if they are
+  // return false if the objects do not collide
+  // return true if the objects do collide
+}
+```
+
+and we would use such a function in our program like this:
+
+```js
+if (doCollide(ball, paddleLeft)) {
+  // bounce ball off paddle Left
+}
+```
+
+Any object passed to our `doCollide` function must have an `$element` property that references the HTML element that the object's data represents as well as `x` and `y` properties that store where the `$element` is. (If you haven't set up your object data for the ball and the paddles, go back before continuing).
+
+For now, let's assume that we have a generic `gameItem` that is passed to the function as one of our objects. It's HTML, CSS, and JavaScript look like this:
+
+```html
+<div id="gameItem"></div>
+```
+
+```css
+#gameItem {
+  position: absolute;
+  left: 100px;
+  top: 50px;
+}
+```
+
+```js
+var gameItem = {};
+gameItem.$element = $("#gameItem");
+gameItem.x = 100;
+gameItem.y = 50;
+// speedX and speedY aren't needed for now
+```
+
+To tell if the two objects collide, we need to know where each object's boundaries are in space. This means finding the `y` coordinate of the top and bottom sides of each object (`obj.topY` and `obj.bottomY`), and finding the `x` coordinate for the left and right sides of each object (`obj.leftX` and `obj.rightX`).
+
+### `obj.leftX` and `obj.topY`
+
+`gameItem.x` and `gameItem.y` are based on the coordinates of the top-left corner of `gameItem.$element`. So, according to the data above, the **top left corner** of the `gameItem.$element` is 100 pixels from the left of the screen and 50 pixels from the top of the screen. 
+
+This means that we already know that: `gameItem.leftX = gameItem.x` and `gameItem.topY = gameItem.y`.
+
+### `obj.rightX` and `obj.bottomY`
+
+We can calculate where `gameItem.rightX` is relative to `gameItem.leftX` if we know the **width** of the `gameItem.$element`. Luckily, since `gameItem.$element` is a jQuery object, it comes with a `.width()` method for calculating its own width (as well as a `height()` method)!
+
+Therefore, we can calculate `gameItem.rightX` and `gameItem.bottomY` like so:
+
+```js
+gameItem.rightX = gameItem.leftX + gameItem.$element.width();
+gameItem.bottomY = gameItem.topY + gameItem.$element.height();
+```
+
+If the `gameItem.$element` is a `40px` square, the data might look like this:
+
+```js
+var gameItem = {};
+gameItem.$element = $("#gameItem");
+gameItem.x = 100;
+gameItem.y = 50;
+gameItem.leftX = 100;   // same as gameItem.x
+gameItem.topY = 50;     // same as gameItem.y
+gameItem.rightX = 140   // calculated as gameItem.leftX + gameItem.$element.width();
+gameItem.bottomY = 90   // calculated as gameItem.topY + gameItem.$element.height();
+```
+
+Great! Now that we know how to calculate the four sides of our `gameItem`, we can calculate the four sides of the two objects passed to `doCollide`: `obj1` and `obj2`!
+
+### Collisions, or rather, Non-Collisions
+Interestingly, it is far easier to tell if two objects are not colliding than when they are colliding.
+
+The objects are _not colliding_ if:
+- The **left side** of one object is to the right of the **right side** of the other. 
+- The **top side** of one object is below the **bottom side** of the other. 
+
+Otherwise, they must be colliding.
+
+**Using the data you calculated and the logic above, complete the doCollide function**
+
+```js
+function doCollide(obj1, obj2) {
+  // calculate obj1.leftX, obj1.rightX, obj1.topY, and obj1.bottomY
+  // calculate obj2.leftX, obj2.rightX, obj2.topY, and obj2.bottomY
+  
+  // IF obj1.leftX is to the left of obj2.rightX:
+  //    return false;
+  // ELSE IF obj1.topY is below obj2.bottomY:
+  //    return false;
+  // Repeat with obj2 first and obj1 second
+  
+  // ELSE:
+  //    return true;
 }
 ```
 
