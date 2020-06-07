@@ -310,69 +310,16 @@ gameItem.y = 50;    // same as "top"
 // speedX and speedY aren't needed for now
 ```
 
-**To tell if a our game item collides with another, we need to know where the `gameItem.$element`'s boundaries are in space.** This means
-1. finding the `y` coordinates of the top and bottom sides (`gameItem.topY` and `gameItem.bottomY`)
-2. finding the `x` coordinates of the left and right sides (`gameItem.leftX` and `gameItem.rightX`).
-
-### Left and Top Sides
-
-`gameItem.x` and `gameItem.y` are based on the coordinates of the top-left corner of `gameItem.$element`. So, according to the data above, the **top left corner** of the HTML element is 100 pixels from the left of the screen and 50 pixels from the top of the screen. 
-
-This means that we already know that: `gameItem.leftX = gameItem.x` and `gameItem.topY = gameItem.y`.
-
-### Right and Bottom Sides
-
-We can calculate where `gameItem.rightX` is relative to `gameItem.leftX` if we know the **width** of HTML element. Same goes for `gameItem.bottomY` if we know the **height**.
-
-Luckily, since `gameItem.$element` is a jQuery object, it comes with a `.width()` method for calculating its own width (as well as a `height()` method)!
-
-Therefore, we can calculate `gameItem.rightX` and `gameItem.bottomY` like so:
+Assuming that you are dealing with two `gameItem` objects, `objA` and `objB`, the `doCollide` function's pseudocode would look like this:
 
 ```js
-gameItem.rightX = gameItem.leftX + gameItem.$element.width();
-gameItem.bottomY = gameItem.topY + gameItem.$element.height();
-```
-
-If the `gameItem.$element` is a `40px` square, the data might look like this:
-
-```js
-var gameItem = {};
-gameItem.$element = $("#gameItem");
-gameItem.x = 100;
-gameItem.y = 50;
-gameItem.leftX = 100;   // same as gameItem.x
-gameItem.topY = 50;     // same as gameItem.y
-gameItem.rightX = 140   // calculated as gameItem.leftX + gameItem.$element.width();
-gameItem.bottomY = 90   // calculated as gameItem.topY + gameItem.$element.height();
-```
-
-Great! Now that we know how to calculate the four sides of our `gameItem`, we can calculate the four sides of the two objects passed to `doCollide`: `obj1` and `obj2`!
-
-### Collisions, or rather, Non-Collisions
-Interestingly, it is far easier to tell if two objects are not colliding than when they are colliding.
-
-The objects are _not colliding_ if:
-- The **left side** of one object is to the right of the **right side** of the other. 
-- The **top side** of one object is below the **bottom side** of the other. 
-
-Otherwise, they must be colliding.
-
-**Using the data you calculated and the logic above, complete the doCollide function**
-
-```js
-function doCollide(obj1, obj2) {
-  // calculate obj1.leftX, obj1.rightX, obj1.topY, and obj1.bottomY
-  // calculate obj2.leftX, obj2.rightX, obj2.topY, and obj2.bottomY
-  
-  // IF obj1.leftX is to the left of obj2.rightX:
-  //    return false;
-  // ELSE IF obj1.topY is below obj2.bottomY:
-  //    return false;
-  // Repeat with obj2 first and obj1 second
-  
-  // ELSE:
-  //    return true;
-}
+IF the left side of objA is left of the right side of objB AND
+  the right side of objA is right of the left side of objB AND
+  the top side of objA is above the bottom side of objB AND
+  the bottom side of objA is below the top side of objB: 
+  return true
+ELSE:
+  return false
 ```
 
 # Abstraction Example	
