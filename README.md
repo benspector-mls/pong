@@ -161,8 +161,8 @@ For example, in bouncing box, we have the following function:
 
 ```js
 function moveBox() {
-  positionX = positionX + speedX; // update the position of the box along the x-axis
-  $box.css("left", positionX);    // draw the box in the new location, positionX pixels away from the "left"
+  positionX += speedX;                 // update the position of the box along the x-axis
+  $("#box").css("left", positionX);    // draw the box in the new location, positionX pixels away from the "left"
 }
 ```
 
@@ -187,11 +187,13 @@ box.speedY = 0;
 box.$element = $("#box");
 ```
 
-You can then reference the `.$element` property to manipulate the DOM element through jQuery functions like `.css()`. The `moveBox()` function might look like this:
+Notably, we are now storing the jQuery object, `$("#box")` in a variable. This will give us continual access to the same HTML element without having to use jQuery to get that element each time we need it. 
+
+This means that we can reference the `.$element` property to manipulate the HTML element through jQuery functions like `.css()`. For bouncing box, the `moveBox()` function might look like this:
 
 ```js
 function moveBox() {
-  box.x = box.x + box.speedX;       // update the position of the box along the x-axis
+  box.x += box.speedX;              // update the position of the box along the x-axis
   box.$element.css("left", box.x);  // draw the box in the new location, positionX pixels away from the "left"
 }
 ```
