@@ -149,7 +149,7 @@ Suggestions for this project:
 
 We'll need to reposition the ball and each paddle on each update of the timer. Luckily, we've learned how to move things in the past by keeping track of:
 - `x` (or `positionX`): the coordinate location of the game item along the x axis
-- or `speedX`: the speed (distance over time) and direction (+/-) of the game item along the x axis
+- `speedX`: the speed (distance over time) and direction (+/-) of the game item along the x axis
 
 And by using the jQuery `.css()` function to draw the element in the new position by changing how far the `$element` is from the `"left"` of the screen: 
 
