@@ -68,14 +68,13 @@ For example: in bouncing box, when the box is clicked:
 The plan for building Pong will be as follows:
 1. Create the DOM elements needed for the game with HTML and CSS.
 2. Declare variables for data needed for each DOM element. Use objects to group together related data.
-3. Create a factory function to reduce repitition when creating game item objects. 
-4. Respond to keyboard events by adjusting each paddle's `.velocityY` property.
-5. Move the paddles.
-6. Move the ball.
-7. Identify when the ball collides with the paddles --> Determine how the ball will bounce off.
-8. Identify when the ball collides with the top or bottom --> Determine how the ball will bounce off.
-9. Identify when a point ends --> Determine what to do to start a new point.
-10. End the game when 11 points are reached.
+3. Respond to keyboard events by adjusting each paddle's `.speedY` property.
+4. Move the paddles.
+5. Move the ball.
+6. Identify when the ball collides with the paddles --> Determine how the ball will bounce off.
+7. Identify when the ball collides with the top or bottom --> Determine how the ball will bounce off.
+8. Identify when a point ends --> Determine what to do to start a new point.
+9. End the game when 11 points are reached.
 
 # Helpful Code
 
@@ -183,23 +182,23 @@ var box = {};
 box.x = 0;
 box.y = 100;
 box.speedX = 1;
-box.speedY = 0;
-box.$element = $("#box");
+box.speedY = 1;
+box.id = "#box";
 ```
 
-Notably, we are now storing the jQuery object, `$("#box")` in a variable. This will give us continual access to the same HTML element without having to use jQuery to get that element each time we need it. 
+Notably, we are now storing the id of the HTML element in a variable. This will tie the data that manages each game item to the HTML element that is being controlled.
 
-This means that we can reference the `.$element` property to manipulate the HTML element through jQuery functions like `.css()`. For bouncing box, the `moveBox()` function might look like this:
+For bouncing box, we would refactor the `moveBox()` function this:
 
 ```js
 function moveBox() {
   box.x += box.speedX;              // update the position of the box along the x-axis
-  box.$element.css("left", box.x);  // draw the box in the new location, positionX pixels away from the "left"
+  $(box.id).css("left", box.x);  // draw the box in the new location, positionX pixels away from the "left"
 }
 ```
 
 Since you'll be creating objects to represent the ball and each paddle, I highly recommend using a factory function to ensure that each `gameItem` has the data below:
-- `gameItem.$element`
+- `gameItem.id`
 - `gameItem.x`
 - `gameItem.y`
 - `gameItem.speedX`
