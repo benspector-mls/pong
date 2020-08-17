@@ -20,10 +20,10 @@ Pong is a game played by two players who each control a paddle placed at opposit
 
 # Setup
 
-To install this project, first clone the [template](https://github.com/benspector3/asd-template/) repository by entering these commands into your bash terminal:
+To install this project, first clone the [template](https://github.com/OperationSpark/asd-template) repository by entering these commands into your bash terminal:
 
 ```bash
-git clone https://github.com/benspector3/asd-template.git
+git clone https://github.com/OperationSpark/asd-template
 rm -rf asd-template/.git
 ```
 
