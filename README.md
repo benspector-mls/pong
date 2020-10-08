@@ -92,7 +92,7 @@ Open the `index.html` file. You should see this in the body:
 </body>
 ```
 
-Each project in this class will be build on some kind of `board` with various `gameItems` that are on the board. For this project, there are only 3 game items:
+Each project in this class will be build on some kind of `board` with various `gameItems` that are on the board. For this project, there are only 3 required game items:
 - the left paddle
 - the ball
 - the right paddle
