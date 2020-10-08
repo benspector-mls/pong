@@ -115,7 +115,7 @@ The following properties will be useful for determining the appearance of our DO
 - `background-color`: the color of the element
 - `width`: the width of the element in pixels
 - `height`: the height of the element in pixels
-- `border-radius`: how rounded the edges of the element are. Leaving out this property will leave the element as a rectangle. Setting this value to be equal to `width` and `height` will make the shape a circle.
+- `border-radius`: how rounded the edges of the element are. Leaving out this property will leave the element as a rectangle. Setting this value to half of `width` or `height` will make the shape a circle (assuming width and height are the same).
 
 The following properties will allow us to place our elements anywhere on the screen, relative to the `board`.
 - `position: absolute`: allows us to use the `top` and `left` properties to position HTML elements anywhere we want on the screen relative to the parent element. 
@@ -142,7 +142,7 @@ Overall, the CSS should look like this:
 Suggestions for this project:
 - Each paddle should have a unique `background-color`
 - Both paddles should have `width: 20px;` and `height: 80px;`
-- The ball should have `width:20px;`, `height:20px` and `border-radius: 20px;`
+- The ball should have `width:20px;`, `height:20px` and `border-radius: 10px;`
 
 ### Repositioning DOM Elements
 
