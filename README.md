@@ -8,7 +8,7 @@ Pong is a game played by two players who each control a paddle placed at opposit
 - [Setup](#setup)
 - [Learning Objectives](#learning-objectives)
 - [Planning](#planning)
-- [Plan of Attack](#plan-of-attack)
+- [Grade Rubric and Schedule](#grade-rubric-and-schedule)
 - [Helpful Code](#helpful-code)
   - [HTML for Game Items](#html-for-game-items)
   - [CSS for Game Items](#css-for-game-items)
@@ -63,18 +63,38 @@ For example: in bouncing box, when the box is clicked:
 2. The point total goes up by 1 and is displayed on the box
 3. The position of the box is reset to 0
 
-# Plan of Attack
+# Grade Rubric and Schedule
 
-The plan for building Pong will be as follows:
-1. Create the DOM elements needed for the game with HTML and CSS.
-2. Declare variables for data needed for each DOM element. Use objects to group together related data.
-3. Respond to keyboard events by adjusting each paddle's `.speedY` property.
-4. Move the paddles.
-5. Move the ball.
-6. Identify when the ball collides with the paddles --> Determine how the ball will bounce off.
-7. Identify when the ball collides with the top or bottom --> Determine how the ball will bounce off.
-8. Identify when a point ends --> Determine what to do to start a new point.
-9. End the game when 11 points are reached.
+## Best Practices (30 points)
+
+1. All code in proper sections (setup, core, helpers, etc.) - 5 points
+2. Use objects to store data - 5 points
+3. Use comments to describe setup and functions - 5 points
+4. Avoid magic numbers - 5 points
+5. Use helper functions to separate concerns - 5 points
+6. Generalize functions (i.e. only one collision detection function for all ball-paddle collisions; hard-coding to check both in a single function doesn't count) - 5 points
+
+## Program Content (70 points)
+
+### Week 1
+
+1. Get the ball, paddles, and two score boxes to display on screen - 10 points
+2. Declare variables to store the data for the program - 5 points
+3. Respond to keyboard events - 15 points
+4. Update paddle positions - 5 points
+5. Handle paddle-wall collisions - 5 points
+
+### Week 2
+
+1. Use a factory function to create objects - 5 points
+2. Get the ball moving at game start (should be random to a degree) - 5 points
+3. Handle ball-wall collisions (non-scoring) - 5 points
+4. Handle scoring (increase score and reset ball) - 5 points
+
+### Week 3
+
+1. Handle ball-paddle collisions - 5 points
+2. End the game after a certain score (no more than 11) - 5 points
 
 # Helpful Code
 
