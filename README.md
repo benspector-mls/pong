@@ -112,10 +112,12 @@ Open the `index.html` file. You should see this in the body:
 </body>
 ```
 
-Each project in this class will be build on some kind of `board` with various `gameItems` that are on the board. For this project, there are only 3 required game items:
+Each project in this class will be build on some kind of `board` with various `gameItems` that are on the board. For this project, there are a number of required game items:
 - the left paddle
 - the ball
 - the right paddle
+- the score for player1
+- the score for player2
 
 Each one of these game items needs to be represented in HTML and, for the most part, `<div>`s can be used. To create a `<div>` with a particular `id` attribute, place the `id=""` attribute inside the opening tag:
 
@@ -123,7 +125,7 @@ Each one of these game items needs to be represented in HTML and, for the most p
 <div id="uniqueGameItemName"> </div>
 ```
 
-Later on you may want to add `#score` elements. For now, focus on the ball and the paddles.
+Not all of these game items will need objects. It is up to you to decide which ones do and which ones don't. You also may want more elements than just the ones mentioned, but those are the bare minimum required.
 
 ### CSS for Game Items
 
