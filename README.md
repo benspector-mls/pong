@@ -5,7 +5,6 @@ Pong is a game played by two players who each control a paddle placed at opposit
 <img src="img/pong.gif">
 
 **Table of Contents**
-- [Setup](#setup)
 - [Learning Objectives](#learning-objectives)
 - [Planning](#planning)
 - [Grade Rubric and Schedule](#grade-rubric-and-schedule)
@@ -17,17 +16,7 @@ Pong is a game played by two players who each control a paddle placed at opposit
   - [Keyboard Inputs](#keyboard-inputs)
 - [Collisions](#collisions)
 - [Abstraction Example](#abstraction-example)
-
-# Setup
-
-To install this project, first clone the [template](https://github.com/OperationSpark/asd-template) repository by entering these commands into your bash terminal:
-
-```bash
-git clone https://github.com/OperationSpark/asd-template
-rm -rf asd-template/.git
-```
-
-Then, rename the folder to `pong`
+- [Submit Your Work](#submit-your-work)
 
 # Learning Objectives
 - Practice modeling data with Objects
@@ -388,3 +377,13 @@ var roll2 = rollDice(10);
 var roll3 = rollDice(20);	
 ```
 
+# Submit Your Work
+
+Submit your work regularly. Because these files are already being tracked by your GitHub repo, you can skip the "git add" step. Instead, enter the following commands:
+
+```bash
+git commit -a -m "saving pong"
+git push
+```
+
+Congratulations on completing Pong!
