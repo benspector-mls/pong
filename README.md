@@ -8,7 +8,7 @@ Pong is a game played by two players who each control a paddle placed at opposit
 - [Learning Objectives](#learning-objectives)
 - [Planning](#planning)
 - [Grade Rubric and Schedule](#grade-rubric-and-schedule)
-- [Helpful Code](#helpful-code)
+- [Helpful Code and Advice](#helpful-code-and-advice)
   - [Week 1](#week-1)
     - [HTML for Game Items](#html-for-game-items)
     - [CSS for Game Items](#css-for-game-items)
