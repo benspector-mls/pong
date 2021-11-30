@@ -445,6 +445,7 @@ This one is easy. If either player scores enough points to win, then simply call
 Submit your work regularly. Because these files are already being tracked by your GitHub repo, you can skip the "git add" step. Instead, enter the following commands:
 
 ```bash
+git add -A
 git commit -a -m "saving pong"
 git push
 ```
