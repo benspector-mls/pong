@@ -10,18 +10,18 @@ Pong is a game played by two players who each control a paddle placed at opposit
 - [Grade Rubric and Schedule](#grade-rubric-and-schedule)
 - [Helpful Code and Advice](#helpful-code-and-advice)
   - [Week 1](#week-1)
-    - [HTML for Game Items](#html-for-game-items)
-    - [CSS for Game Items](#css-for-game-items)
-    - [Using Factory Functions and Objects](#using-factory-functions-and-objects)
-    - [Registering Keyboard Events](#registering-keyboard-events)
+    - HTML for Game Items
+    - CSS for Game Items
+    - Using Factory Functions and Objects
+    - Registering Keyboard Events
   - [Week 2](#week-2)
-    - [Moving the Ball](#moving-the-ball)
-    - [Repositioning DOM Elements](#repositioning-dom-elements)
-    - [Collisions with Walls](#collisions-with-walls)
+    - Moving the Ball
+    - Repositioning DOM Elements
+    - Collisions with Walls
   - [Week 3](#week-3)
-    - [Scoring](#scoring)
-    - [Collisions Between Objects](#collisions-between-objects)
-    - [Ending the Game](#ending-the-game)
+    - Scoring
+    - Collisions Between Objects
+    - Ending the Game
 - [Submit Your Work](#submit-your-work)
 
 # Learning Objectives
@@ -96,7 +96,7 @@ Below are some helpful hints and suggestions that will hopefully aid you in this
 
 ## Week 1
 
-### HTML for Game Items:
+<details> <summary> HTML for Game Items: </summary>
 
 Open the `index.html` file. You should see this in the body:
 
@@ -123,9 +123,11 @@ Each one of these game items needs to be represented in HTML and, for the most p
 
 Not all of these game items will need objects. It is up to you to decide which ones do and which ones don't. You also may want more elements than just the ones mentioned, but those are the bare minimum required.
 
+</details>
+
 <hr>
 
-### CSS for Game Items
+<details> <summary> CSS for Game Items </summary>
 
 Open the `index.css` file.
 
@@ -164,9 +166,11 @@ Suggestions for this project:
 - Both paddles should have `width: 20px;` and `height: 80px;`
 - The ball should have `width:20px;`, `height:20px` and `border-radius: 10px;`
 
+</details>
+
 <hr>
 
-### Using Factory Functions and Objects
+<details> <summary> Using Factory Functions and Objects </summary>
 
 We will need to manage the data for each game item in this project: the ball and each paddle. 
 
@@ -249,9 +253,11 @@ var width = $("#id").width();
 var height = $("#id").height();
 ```
 
+</details>
+
 <hr>
 
-### Registering Keyboard Events
+<details> <summary> Registering Keyboard Events </summary>
 
 This is something you should already have plenty of practice with. However, there are some minor differences this time. Notably, there are two paddles that must be interacted with. Both paddles should react to both `"keyup"` and `"keydown"` events.
 
@@ -280,11 +286,13 @@ function handleKeyDown() {
 
 Use https://keycode.info/ to find out the keycode for any key. 
 
+</details>
+
 <hr>
 
 ## Week 2
 
-### Moving the Ball
+<details> <summary> Moving the Ball </summary>
 
 Getting the ball to move is kind of important, so let's talk about how to do this. The best approach is as follows.
 
@@ -293,19 +301,23 @@ Getting the ball to move is kind of important, so let's talk about how to do thi
 
 In the `startBall` function, you should give the `ball` object a new `x` and `y` position (that way, you can reuse the function after a point is scored!). It should, of course, be placed at the center of the board. Furthermore, you should give it initial `speedX` and `speedY` values. **These speed values should be random.** It's up to you how to make them random, but it's important to be careful, at least with the `speedX` value. For that reason, the following equation is suggested for `speedX`.
 
-    randomNum = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
+```js
+randomNum = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
+```
 
 That equation will assign a value either between `-5` and `-2`, or a value between `2` and `5`. If you want to change the range of values, you should only change the `3` and `2` values of the equation. The `3` says what the spread should be (bigger number means bigger range of possible values), and the `2` says what the minimum absolute value of `randomNum` will be.
 
+</details>
+
 <hr>
 
-### Repositioning DOM Elements
+<details> <summary> Repositioning DOM Elements </summary>
 
 We'll need to reposition the ball and each paddle on each update of the timer. Luckily, we've learned how to move things in the past. This time we want to move multiple objects, but since moving an object is basically the same every time, you should only make one function to handle that. Here's how to approach the problem.
 
-* Step 1: Create a function (call it `moveObject`), with a single parameter. That parameter will take the object you want to move as an argument.
-* Step 2: In the function, use the parameter and dot notation to change the current `x` and `y` values of the object based on the object's current speed.
-* Step 3: After updating `x` and `y`, use jQuery to update the `"left"` and `"top"` properties of the corresponding DOM element 
+* **Step 1:** Create a function (call it `moveObject`), with a single parameter. That parameter will take the object you want to move as an argument.
+* **Step 2:** In the function, use the parameter and dot notation to change the current `x` and `y` values of the object based on the object's current speed.
+* **Step 3:** After updating `x` and `y`, use jQuery to update the `"left"` and `"top"` properties of the corresponding DOM element 
 
 Recall that you should use the jQuery `.css()` function to draw the element in the new position. For example, to change how far left or right an element is, you could write:
 
@@ -321,9 +333,11 @@ $("elementID").css("top", positionY)
 
 Of course, `"elementID"`, `positionX`, and `positionY` should all be obtained using the function's parameter and dot notation when writing your own function, which this example does not do.
 
+</details>
+
 <hr>
 
-### Collisions with Walls
+<details> <summary> Collisions with Walls </summary>
 
 In order to detect collisions with walls, you need to know three things.
 1. The position of the wall
@@ -347,15 +361,19 @@ Once you know those values, detecting a collision with a wall is easy. You have 
 3. If an object's `x + width` value goes past the right side of the box, then it collided with it.
 4. If an object's `y + height` value goes past the bottom side of the box, then it collided with it.
 
-**IMPORTANT:** You should make this collision detection be a single function (call it `wallCollision`) with a single parameter. The parameter should take in the object being checked as an argument (the `board` should *not* be an argument, however). This way, you only need to write the collision detection once, and you can use it not only for both paddles, but for the ball as well!
+>**IMPORTANT:** You should make this collision detection be a single function (call it `wallCollision`) with a single parameter. The parameter should take in the object being checked as an argument (the `board` should *not* be an argument, however). This way, you only need to write the collision detection once, and you can use it not only for both paddles, but for the ball as well!
 
-**Note:** It is debatable that due to how the ball is able to score, a separate function for ball collisions might be best. If you wish to make two functions, that is your decision, but it is not recommended.
+>**SUGGESTION:** The wall collisions can also be handled using the same min/max approach used in the Image Filtering project. Take a look at the `keepInBounds` function there. With some slight modifications, you can actually use that function for both your paddles and ball hitting the top and bottom walls. Give it a try if you'd like to challenge yourself and create more efficient code.
+
+>**NOTE:** You can use the `wallCollision` function for the ball as well as the paddles. However, this will only work for detecting collisions with the top and bottom of the board.
+
+</details>
 
 <hr>
 
 ## Week 3
 
-### Scoring
+<details> <summary> Scoring </summary>
 
 Scoring has three parts to it.
 
@@ -369,11 +387,13 @@ Each of these parts is a simple task.
 2. Update the appopriate score in memory, then redraw the scoring element to display the updated score (reminder: `$("#scoreId").text(updatedScore)` will change the element with id `"scoreID"` to display whatever value is stored in the variable `updatedScore`)
 3. Simply call your `startBall` function that you created back in Week 2
 
+</details>
+
 <hr>
 
-### Collisions Between Objects
+<details> <summary> Collisions Between Objects </summary>
 
-In games, collisions will occur frequently between objects. Having a function that can tell if two objects are colliding would be really convenient! The outline for such a function looks like this:
+In games, collisions will occur frequently between objects. Having a function that can tell if two objects are colliding would be really convenient! The skeleton for such a function looks like this:
 
 ```js
 function doCollide(obj1, obj2) {
@@ -394,51 +414,57 @@ You should have already created a `doCollide` function by this point. If you hav
 
 If you have not created the `doCollide` function, then below is a rough explanation on how to do so.
 
-<details> <summary> Click for Explanation </summary>
-Any object passed to our `doCollide` function should store the data for an HTML element. Therefore, they must have an `$element` storing the jQuery object for the HTML element as well as `x` and `y` properties that store where the `$element` is. 
+><details> <summary> Click for Explanation </summary>
+>Any object passed to our `doCollide` function should store the data for an HTML element. Therefore, they must have an `$element` storing the jQuery object for the HTML element as well as `x` and `y` properties that store where the `$element` is. 
+>
+>If you haven't set up your object data to represent the ball and the paddles, go back and do so before continuing
+>
+>For now, let's assume that we have a generic `gameItem` that is passed to the function as one of our objects. It's HTML, CSS, and JavaScript look like this:
+>
+>```html
+><div id="gameItem"></div>
+>```
+>
+>```css
+>#gameItem {
+>  position: absolute;
+>  left: 100px;  /* distance from the left side of the screen */
+>  top: 50px;    /* distance from the top of the screen */
+>}
+>```
+>
+>```js
+>var gameItem = {};
+>gameItem.$element = $("#gameItem");
+>gameItem.x = 100;   // same as "left"
+>gameItem.y = 50;    // same as "top"
+>// speedX and speedY aren't needed for now
+>```
+>
+>Assuming that you are dealing with two `gameItem` objects, `objA` and `objB`, the `doCollide` function's pseudocode would look like this:
+>
+>```js
+>IF the left side of objA is left of the right side of objB AND
+>  the right side of objA is right of the left side of objB AND
+>  the top side of objA is above the bottom side of objB AND
+>  the bottom side of objA is below the top side of objB: 
+>  return true
+>ELSE:
+>  return false
+>```
+></details>
 
-If you haven't set up your object data to represent the ball and the paddles, go back and do so before continuing
-
-For now, let's assume that we have a generic `gameItem` that is passed to the function as one of our objects. It's HTML, CSS, and JavaScript look like this:
-
-```html
-<div id="gameItem"></div>
-```
-
-```css
-#gameItem {
-  position: absolute;
-  left: 100px;  /* distance from the left side of the screen */
-  top: 50px;    /* distance from the top of the screen */
-}
-```
-
-```js
-var gameItem = {};
-gameItem.$element = $("#gameItem");
-gameItem.x = 100;   // same as "left"
-gameItem.y = 50;    // same as "top"
-// speedX and speedY aren't needed for now
-```
-
-Assuming that you are dealing with two `gameItem` objects, `objA` and `objB`, the `doCollide` function's pseudocode would look like this:
-
-```js
-IF the left side of objA is left of the right side of objB AND
-  the right side of objA is right of the left side of objB AND
-  the top side of objA is above the bottom side of objB AND
-  the bottom side of objA is below the top side of objB: 
-  return true
-ELSE:
-  return false
-```
 </details>
 
 <hr>
 
-### Ending the Game
+<details> <summary> Ending the Game </summary>
 
 This one is easy. If either player scores enough points to win, then simply call the `endGame()` function. The `endGame()` function has already been created for you.
+
+</details>
+
+<br>
 
 # Submit Your Work
 
