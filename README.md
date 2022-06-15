@@ -196,7 +196,7 @@ function moveBox() {
 }
 ```
 
-Since you'll be creating objects to represent the ball and each paddle, I highly recommend using a factory function to ensure that each `gameItem` has the data below:
+Since you'll be creating objects to represent the ball and each paddle, use a factory function to ensure that each `gameItem` has the data below:
 - `gameItem.id`
 - `gameItem.x`
 - `gameItem.y`
