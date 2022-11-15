@@ -177,7 +177,7 @@ We will need to manage the data for each game item in this project: the ball and
 Use objects to manage this data. For example, in bouncing box, we could organize the data for the box like so (shortening `positionX` and `positionY` to `x` and `y`:
 
 ```js
-var box = {};
+let box = {};
 box.x = 0;
 box.y = 100;
 box.width = 200;
@@ -213,17 +213,17 @@ When creating a factory function, the function should return an object that has 
 For example, consider this data for animal objects:
 
 ```js
-var spot = {};
+let spot = {};
 spot.name = "spot";
 spot.species = "dog";
 spot.owner = "Farmer Fred";
 
-var daisy = {};
+let daisy = {};
 daisy.name = "daisy";
 daisy.species = "bird";
 spot.owner = "Farmer Fred";
 
-var bessy = {};
+let bessy = {};
 bessy.name = "bessy";
 bessy.species = "cow";
 spot.owner = "Farmer Fred";
@@ -235,13 +235,13 @@ For each value that is unique, I will add a parameter to my factory function. An
 
 ```js
 // Initialization
-var spot = Animal("spot", "dog");
-var daisy = Animal("daisy", "bird");
-var bessy = Animal("bessy", "cow");
+let spot = Animal("spot", "dog");
+let daisy = Animal("daisy", "bird");
+let bessy = Animal("bessy", "cow");
 
 // Factory Function
 function Animal(name, species) {
-  var animal = {};
+  let animal = {};
   animal.name = name;
   animal.species = species;
   animal.owner = "Farmer Fred";
@@ -270,12 +270,12 @@ There are two ways to approach this issue. You can either make a total of four e
 Check out the [Walker project](https://github.com/benspector3/asd-template-keyboard-intro/) for ideas on how to move an object with your keyboard. Below is an example of simply printing  whenever the `ENTER` key is pressed down.
 
 ```js
-var KEYCODE = {
+let KEYCODE = {
   ENTER: 13,
 }
 
 function handleKeyDown() {
-  var keycode = event.which;
+  let keycode = event.which;
   console.log(keycode);
   
   if (keycode === KEYCODE.ENTER) {
@@ -436,7 +436,7 @@ If you have not created the `doCollide` function, then below is a rough explanat
 >```
 >
 >```js
->var gameItem = {};
+>let gameItem = {};
 >gameItem.element = document.querySelector("#gameItem");
 >gameItem.x = 100;   // same as "left"
 >gameItem.y = 50;    // same as "top"
