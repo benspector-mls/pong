@@ -189,12 +189,13 @@ box.id = "#box";
 
 Notably, we are now storing the id of the HTML element in a variable. This will tie the data that manages each game item to the HTML element that is being controlled.
 
-For bouncing box, we would refactor the `moveBox()` function this:
+For the walker project, we would refactor the `repositionGameItem()` function like this:
 
 ```js
-function moveBox() {
+function repositionGameItem() {
   box.x += box.speedX;              // update the position of the box along the x-axis
-  $(box.id).css("left", box.x);  // draw the box in the new location, positionX pixels away from the "left"
+  let boxElement = document.querySelector(box.id);
+  boxElement.style.left = box.x + "px";  // draw the box in the new location, positionX pixels away from the "left"
 }
 ```
 
@@ -248,14 +249,9 @@ function Animal(name, species) {
 }
 ```
 
-Please keep in mind that the factory function you create should use jQuery to extract CSS information to initialize the `x`, `y`, `width`, and `height` values of your objects. As a reminder, you can get such information as follows:
+Please keep in mind that the factory function you create should use the DOM API to extract CSS information to initialize the `x`, `y`, `width`, and `height` values of your objects.
 
-```js
-var x = parseFloat($("#id").css("left"));
-var y = parseFloat($("#id").css("top"));
-var width = $("#id").width();
-var height = $("#id").height();
-```
+Take a look at the `getBoundingClientRect()` ([MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)) function which will will help you immensely!
 
 </details>
 
@@ -321,18 +317,20 @@ We'll need to reposition the ball and each paddle on each update of the timer. L
 
 * **Step 1:** Create a function (call it `moveObject`), with a single parameter. That parameter will take the object you want to move as an argument.
 * **Step 2:** In the function, use the parameter and dot notation to change the current `x` and `y` values of the object based on the object's current speed.
-* **Step 3:** After updating `x` and `y`, use jQuery to update the `"left"` and `"top"` properties of the corresponding DOM element 
+* **Step 3:** After updating `x` and `y`, use the DOM API to update the `"left"` and `"top"` properties of the corresponding DOM element 
 
-Recall that you should use the jQuery `.css()` function to draw the element in the new position. For example, to change how far left or right an element is, you could write:
+Recall that you should use the DOM API to draw the element in the new position. For example, to change how far left or right an element is, you could write:
 
 ```js
-$("elementID").css("left", positionX)
+let element = document.querySelector("#element")
+element.style.left = x + "px";
 ```
 
 If we wanted to move the element vertically instead, you would do the same thing, but for the `"top"` property:
 
 ```js
-$("elementID").css("top", positionY)
+let element = document.querySelector("#element")
+element.style.top = y + "px";
 ```
 
 Of course, `"elementID"`, `positionX`, and `positionY` should all be obtained using the function's parameter and dot notation when writing your own function, which this example does not do.
@@ -354,7 +352,7 @@ To fix this, you should create two new `const` values under the "Constant Variab
 1. `BOARD_WIDTH`
 2. `BOARD_HEIGHT`
 
-You can obtain the values of `BOARD_WIDTH` and `BOARD_HEIGHT` using `$("#board").width()` and `$("#board").height()`, respectively.
+You can obtain the values of `BOARD_WIDTH` and `BOARD_HEIGHT` using `boardElement.clientWidth` and `boardElement.clientHeight`, respectively.
 
 That will give you the `x` position of the right side of the board and the `y` position of the bottom side of the board. As for the left and top of the board, both of those values are `0`, which is fine if you simply hard-code.
 
@@ -388,7 +386,7 @@ Scoring has three parts to it.
 Each of these parts is a simple task.
 
 1. Detection - check if the ball collides with the left or right wall (can be done in the `wallCollision` function)
-2. Update the appopriate score in memory, then redraw the scoring element to display the updated score (reminder: `$("#scoreId").text(updatedScore)` will change the element with id `"scoreID"` to display whatever value is stored in the variable `updatedScore`)
+2. Update the appopriate score in memory, then redraw the scoring element to display the updated score (reminder: `document.querySelector("#scoreID").innerHTML = updatedScore)` will change the element with id `"scoreID"` to display whatever value is stored in the variable `updatedScore`)
 3. Simply call your `startBall` function that you created back in Week 2
 
 </details>
@@ -419,7 +417,7 @@ You should have already created a `doCollide` function by this point. If you hav
 If you have not created the `doCollide` function, then below is a rough explanation on how to do so.
 
 ><details> <summary> Click for Explanation </summary>
->Any object passed to our `doCollide` function should store the data for an HTML element. Therefore, they must have an `$element` storing the jQuery object for the HTML element as well as `x` and `y` properties that store where the `$element` is. 
+>Any object passed to our `doCollide` function should store the data for an HTML element. Therefore, they must have an `element` property storing the HTML element object (or its id) for the HTML element as well as `x` and `y` properties that store where the `element` is. 
 >
 >If you haven't set up your object data to represent the ball and the paddles, go back and do so before continuing
 >
@@ -439,7 +437,7 @@ If you have not created the `doCollide` function, then below is a rough explanat
 >
 >```js
 >var gameItem = {};
->gameItem.$element = $("#gameItem");
+>gameItem.element = document.querySelector("#gameItem");
 >gameItem.x = 100;   // same as "left"
 >gameItem.y = 50;    // same as "top"
 >// speedX and speedY aren't needed for now
